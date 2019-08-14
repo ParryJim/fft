@@ -113,19 +113,27 @@ int main()
     copyDComplex(vec1, vec2, n);
     cout << "sample data\n";
     #define WIDTH (10)
+    double sample_energy = 0.0;
     for (int j = 0; j < n; j++) {
+        sample_energy += (real(vec1[j]) * real(vec1[j])) +
+                         (imag(vec1[j]) * imag(vec1[j]));
+        double rdiff = real(vec2[j]) - real(vec1[j]);
+        double idiff = imag(vec2[j]) - imag(vec1[j]);
         cout << setw(WIDTH) << real(vec1[j]) << ",";
         cout << setw(WIDTH) << imag(vec1[j]) << "  ";
         cout << setw(WIDTH) << real(vec2[j]) << ",";
         cout << setw(WIDTH) << imag(vec2[j]) << "  ";
-        cout << setw(WIDTH) << real(vec2[j]) - real(vec1[j]) << ",";
-        cout << setw(WIDTH) << imag(vec2[j]) - imag(vec1[j]) << endl;
+        cout << setw(WIDTH) << rdiff << ",";
+        cout << setw(WIDTH) << idiff << endl;
     }
     old_transform(vec1, lg2); // replace line   FFT(vec, n, d);
     fft(vec2, lg2);
     cout << "FFT of the sample data" << endl;
     double errsqMax = 0.0;
+    double xform_energy = 0.0;
     for(int j = 0; j < n; j++) {
+        xform_energy += (real(vec1[j]) * real(vec1[j])) +
+                        (imag(vec1[j]) * imag(vec1[j]));
         double rdiff = real(vec2[j]) - real(vec1[j]);
         double idiff = imag(vec2[j]) - imag(vec1[j]);
         cout << setw(WIDTH) << real(vec1[j]) << ",";
@@ -138,5 +146,8 @@ int main()
         if (errsq > errsqMax) errsqMax = errsq;
     }
     cout << "Max error = " << errsqMax << endl;
+    cout << "xform_energy = ";
+    cout << xform_energy / sample_energy;
+    cout << " times sample_energy\n";
   return 0;
 }

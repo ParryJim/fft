@@ -1,4 +1,6 @@
-// In place complex FFT
+// In place complex FFT 
+// (normalized such that sum sqrs of fft = n * sum sqrs of samples)
+//
 // Code here is modified from
 // http://https://stackoverflow.com/questions/8801158/fft-in-a-single-c-file
 // where it was an answer posted by Leos313
@@ -12,9 +14,9 @@
 using namespace std;
 
 int reverse(int N, int n) {   //calculating reverse number
-  int j, p = 0, lN = log2(N);
-  for(j = 1; j <= lN; j++) if(n & (1 << (lN - j))) p |= 1 << (j - 1);
-  return p;
+    int j, p = 0, lN = log2(N);
+    for(j = 1; j <= lN; j++) { p <<= 1;  p |= 1 & n; n >>= 1;}
+    return p;
 }
 
 int* brListInit(int lg2N) { // initialize a list of bit-reversed indices with some zeroed
