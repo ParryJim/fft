@@ -111,9 +111,15 @@ int main()
         vec1[j] = dis(gen) + 1i * dis(gen);
     }
     copyDComplex(vec1, vec2, n);
-    cout << "sample data\n";
     #define WIDTH (10)
     double sample_energy = 0.0;
+    cout << "       origin method   "
+         << "       new method      "
+         << "       difference" <<endl;
+    cout << "      real  imaginary  "
+         << "      real  imaginary  "
+         << "      real  imaginary" << endl;
+    cout << "sample data\n";
     for (int j = 0; j < n; j++) {
         sample_energy += (real(vec1[j]) * real(vec1[j])) +
                          (imag(vec1[j]) * imag(vec1[j]));
